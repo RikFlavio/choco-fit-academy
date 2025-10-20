@@ -1,0 +1,39 @@
+# File di sistema macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# File di sistema Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# File di sistema Linux
+*~
+
+# Editor e IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Node modules (se mai userai npm in futuro)
+node_modules/
+
+# File temporanei
+*.log
+*.tmp
+*.bak
+*.cache
+
+# File di backup
+*.backup
+*~
+
+# Cartella dist/build (se mai userai un bundler)
+dist/
+build/

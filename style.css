@@ -1,0 +1,589 @@
+/* Reset e Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+
+/* Background Image - Fixed and Always Visible */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/AppPalestra.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+/* App Container */
+.app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header + Navigation - Combined */
+.header-nav {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.75);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+.header-logo {
+    height: 85px;
+    width: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.9));
+}
+
+/* Navigation - Inline with header */
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-btn {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-emoji {
+    font-size: 28px;
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #ff6b35, #ff8c42);
+    border-color: #ff6b35;
+    box-shadow: 0 3px 10px rgba(255, 107, 53, 0.7);
+}
+
+/* Timer Section - Fixed */
+.timer-section {
+    position: relative;
+    padding: 6px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 98;
+}
+
+.timer-card {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.timer-input-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.timer-input {
+    width: 35px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+}
+
+.timer-input::-webkit-inner-spin-button,
+.timer-input::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+.timer-unit {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+}
+
+.timer-display {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ff6b35;
+    text-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
+    letter-spacing: 1px;
+    min-width: 70px;
+    text-align: center;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.timer-btn {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.timer-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.timer-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sessions Container - Scrollable */
+.sessions-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Nascondi scrollbar ma mantieni funzionalità */
+.sessions-container::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+.session-card {
+    display: none;
+    padding-bottom: 300px;
+}
+
+.session-card.active {
+    display: block;
+}
+
+/* Session Title Wrapper - Sticky con sfondo marcato */
+.session-title-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    padding: 8px 12px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 107, 53, 0.5);
+}
+
+.session-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, rgba(255, 140, 80, 0.45), rgba(255, 107, 53, 0.65));
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 53, 0.6);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Exercise Cards */
+.exercise-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+    transition: background 0.3s ease, backdrop-filter 0.3s ease, border 0.3s ease;
+}
+
+/* Card attiva (in cima) - versione più scura con blur per leggibilità */
+.exercise-card.exercise-card-active {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.exercise-number {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #ff6b35, #ff8c42);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4);
+    flex-shrink: 0;
+}
+
+.exercise-info {
+    flex: 1;
+}
+
+.exercise-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 3px;
+}
+
+.exercise-target {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.exercise-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    gap: 8px;
+}
+
+.exercise-details-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.sets-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sets-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Select per le ripetizioni - stesso stile dei kg */
+.reps-select-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 5px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.reps-select {
+    width: 50px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-align-last: center;
+}
+
+.reps-select option {
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+}
+
+.weight-input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.kg-input {
+    width: 45px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+}
+
+.kg-input::-webkit-inner-spin-button,
+.kg-input::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+.weight-unit {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.rest-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rest-icon {
+    font-size: 16px;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.rest-time {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.video-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.video-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.video-link:active {
+    transform: scale(0.95);
+}
+
+/* Padding bottom per l'ultima card */
+.sessions-container .session-card>.exercise-card:last-child {
+    margin-bottom: 30px;
+}
+
+/* Session Footer */
+.session-footer {
+    text-align: center;
+    padding: 16px 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.session-footer-main {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+}
+
+.session-footer-copyright {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 4px;
+}
+
+.heart-icon {
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.2);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
+
+/* Animazioni di entrata */
+@keyframes slideFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stato iniziale nascosto - cards partono invisibili */
+
+.exercise-card,
+.session-footer {
+    opacity: 0;
+}
+
+.session-title-wrapper,
+.session-title {
+    opacity: 1;
+}
+
+/* Quando hanno la classe animate-in, diventano visibili con animazione */
+.session-title-wrapper.animate-in {
+    animation: slideFromRight 2s ease-out forwards;
+}
+
+.session-title.animate-in {
+    animation: slideFromRight 2s ease-out forwards;
+}
+
+.exercise-card.animate-in {
+    animation: slideFromBottom 1s ease-out forwards;
+}
+
+.session-footer.animate-in {
+    animation: slideFromBottom 1s ease-out forwards;
+}
+
+/* Media query per schermi molto piccoli */
+@media (max-width: 375px) {
+    .header-logo {
+        height: 75px;
+    }
+
+    .header-nav {
+        padding: 8px 12px;
+    }
+
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .nav-emoji {
+        font-size: 26px;
+    }
+
+    .timer-section {
+        padding: 5px 12px;
+    }
+
+    .timer-card {
+        padding: 5px 10px;
+        gap: 8px;
+    }
+
+    .timer-display {
+        font-size: 20px;
+        min-width: 60px;
+    }
+
+    .timer-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    .timer-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .exercise-name {
+        font-size: 15px;
+    }
+
+    .reps-select {
+        width: 45px;
+    }
+}

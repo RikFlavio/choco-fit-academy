@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#ff6b35">
+    <title>ChocoFitAccademy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Image - Fixed -->
+    <div class="background-image"></div>
+
+    <div class="app">
+        <!-- Header + Navigation - Combined and Compact -->
+        <header class="header-nav">
+            <img src="img/LogoChoco.png" alt="Logo" class="header-logo">
+            <nav class="nav">
+                <button class="nav-btn active" data-session="A">
+                    <span class="nav-emoji">🏋️</span>
+                </button>
+                <button class="nav-btn" data-session="B">
+                    <span class="nav-emoji">🔥</span>
+                </button>
+                <button class="nav-btn" data-session="C">
+                    <span class="nav-emoji">⚡</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Timer Section - Fixed -->
+        <div class="timer-section">
+            <div class="timer-card">
+                <div class="timer-input-group">
+                    <input type="number" class="timer-input" value="60" min="1" max="600">
+                    <span class="timer-unit">sec</span>
+                </div>
+                <div class="timer-display">01:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn start" title="Start">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#4CAF50" stroke="none">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </button>
+                    <button class="timer-btn stop" title="Stop">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f44336" stroke="none">
+                            <rect x="6" y="6" width="12" height="12"></rect>
+                        </svg>
+                    </button>
+                    <button class="timer-btn reset" title="Reset">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sessions Container - Scrollable -->
+        <main class="sessions-container">
+            <!-- Sessione A - Lunedì -->
+            <div class="session-card active" data-session="A">
+                <div class="session-title-wrapper">
+                    <div class="session-title">🏋️ Lunedì</div>
+                </div>
+
+                <!-- Esercizio 1 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">1</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Panca piana manubri</div>
+                            <div class="exercise-target">Pettorali</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">5 × 5 ×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="panca-piana-A" value="20">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">120–180s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=VmB1G1K7v94" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 2 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">2</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Goblet Squat</div>
+                            <div class="exercise-target">Quadricipiti + glutei</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">4 × 8 ×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="goblet-squat-A" value="20">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">120s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=MeIiIdhvXT4" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 3 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">3</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Seated Cable Row</div>
+                            <div class="exercise-target">Dorsali + trapezi</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="cable-row-A">
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10" selected>10</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="cable-row-A" value="40">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">90s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=GZbfZ033f74" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 4 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">4</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Rope Push-down</div>
+                            <div class="exercise-target">Tricipiti</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="rope-pushdown-A">
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12" selected>12</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="rope-pushdown-A" value="32">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=vB5OHsJ3EME" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 5 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">5</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Plank</div>
+                            <div class="exercise-target">Core + stabilizzatori</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 × 40–60s</span>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">45–60s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=ASdvN_XEl_c" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="session-footer">
+                    <div class="session-footer-main">
+                        Made with Love
+                        <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="#ff0000">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        by PwR
+                    </div>
+                    <div class="session-footer-copyright">
+                        © 2025 ChocoFitAccademy
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sessione B - Mercoledì -->
+            <div class="session-card" data-session="B">
+                <div class="session-title-wrapper">
+                    <div class="session-title">🔥 Mercoledì</div>
+                </div>
+
+                <!-- Esercizio 1 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">1</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Lat Pulldown</div>
+                            <div class="exercise-target">Gran dorsale</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">4 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="lat-pulldown-B">
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10" selected>10</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="lat-pulldown-B" value="34">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">90s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=CAwf7n6Luuc" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 2 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">2</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Shoulder Press (DB)</div>
+                            <div class="exercise-target">Deltoidi anteriori</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="shoulder-press-B">
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10" selected>10</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="shoulder-press-B" value="16">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">120s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=qEwKCR5JCog" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 3 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">3</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Alzate laterali (DB)</div>
+                            <div class="exercise-target">Deltoidi laterali</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="alzate-laterali-B">
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15" selected>15</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="alzate-laterali-B" value="6">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 4 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">4</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Curl su panca inclinata (DB)</div>
+                            <div class="exercise-target">Bicipiti</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="curl-inclinata-B">
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12" selected>12</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="curl-inclinata-B" value="8">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60–90s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=soxrZlIl35U" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 5 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">5</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Ab-Crunch (machine)</div>
+                            <div class="exercise-target">Addominali</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="ab-crunch-B">
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15" selected>15</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="ab-crunch-B" value="22">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">45–60s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=JSBuaT1tHfM" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="session-footer">
+                    <div class="session-footer-main">
+                        Made with Love
+                        <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="#ff0000">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        by PwR
+                    </div>
+                    <div class="session-footer-copyright">
+                        © 2025 ChocoFitAccademy
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sessione C - Venerdì -->
+            <div class="session-card" data-session="C">
+                <div class="session-title-wrapper">
+                    <div class="session-title">⚡ Venerdì</div>
+                </div>
+
+                <!-- Esercizio 1 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">1</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Panca inclinata (DB ~30°)</div>
+                            <div class="exercise-target">Pettorali superiori</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">4 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="panca-inclinata-C">
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10" selected>10</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="panca-inclinata-C" value="20">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">120s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=8iPEnn-ltC8" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 2 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">2</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Chest Fly (DB o cavi)</div>
+                            <div class="exercise-target">Pettorali</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="chest-fly-C">
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15" selected>15</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="chest-fly-C" value="12">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60–75s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=eozdVDA78K0" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 3 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">3</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Overhead Triceps Extension (DB)</div>
+                            <div class="exercise-target">Tricipiti</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="overhead-triceps-C">
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12" selected>12</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="overhead-triceps-C" value="14">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60–90s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=bjT5WC0FyiU" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 4 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">4</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Hammer Curl (DB)</div>
+                            <div class="exercise-target">Brachiale + avambracci</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">3 ×</span>
+                                <div class="reps-select-group">
+                                    <select class="reps-select" data-exercise="hammer-curl-C">
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12" selected>12</option>
+                                    </select>
+                                </div>
+                                <span class="sets-label">×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="hammer-curl-C" value="12">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=zC3nLlEvin4" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Esercizio 5 -->
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-number">5</div>
+                        <div class="exercise-info">
+                            <div class="exercise-name">Face Pull (cavo)</div>
+                            <div class="exercise-target">Deltoidi post. + romboidi</div>
+                        </div>
+                    </div>
+                    <div class="exercise-details">
+                        <div class="exercise-details-left">
+                            <div class="sets-info">
+                                <span class="sets-label">2 × 15 ×</span>
+                                <div class="weight-input-group">
+                                    <input type="number" class="kg-input" data-exercise="face-pull-C" value="32">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="rest-info">
+                                <span class="rest-icon">⏱️</span>
+                                <span class="rest-time">60s</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=eFxMixk_qPQ" target="_blank" class="video-link"
+                            title="Video Tutorial">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                                    fill="#FF0000" />
+                                <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="session-footer">
+                    <div class="session-footer-main">
+                        Made with Love
+                        <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="#ff0000">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        by PwR
+                    </div>
+                    <div class="session-footer-copyright">
+                        © 2025 ChocoFitAccademy
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
