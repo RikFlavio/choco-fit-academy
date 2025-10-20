@@ -2,7 +2,7 @@
   "name": "ChocoFit - Allenamento Palestra",
   "short_name": "ChocoFit",
   "description": "La tua app per tracciare gli allenamenti in palestra",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#ff6b35",
