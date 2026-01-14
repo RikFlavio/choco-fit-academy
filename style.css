@@ -38,6 +38,7 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease;
     opacity: 0;
     pointer-events: none;
+    overflow-x: hidden;
 }
 
 .screen.active {
@@ -56,11 +57,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 30px 20px;
+    justify-content: flex-start;
+    min-height: 100%;
+    padding: 40px 20px 60px;
     background: rgba(0, 0, 0, 0.7);
     text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .welcome-logo {
@@ -180,6 +183,7 @@ body {
     display: flex;
     flex-direction: column;
     background: rgba(0, 0, 0, 0.75);
+    overflow-x: hidden;
 }
 
 .setup-header {
@@ -205,6 +209,7 @@ body {
 .setup-container {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 20px;
     padding-bottom: 120px;
 }
@@ -632,6 +637,7 @@ body {
     flex-direction: column;
     gap: 16px;
     overflow-y: auto;
+    overflow-x: hidden;
     flex: 1;
     -webkit-overflow-scrolling: touch;
 }
@@ -640,6 +646,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .form-group label {
@@ -657,11 +664,25 @@ body {
     font-size: 16px;
     outline: none;
     transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-group input:focus {
     border-color: #ff6b35;
     background: rgba(255, 255, 255, 0.15);
+}
+
+.form-group input:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.form-group input[readonly] {
+    background: rgba(255, 107, 53, 0.15);
+    border-color: rgba(255, 107, 53, 0.3);
+    cursor: default;
 }
 
 .form-group input::placeholder {
@@ -845,6 +866,7 @@ body {
 #app-screen {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .app {
@@ -853,6 +875,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Header + Navigation */
@@ -1501,7 +1524,7 @@ body {
 .cardiac-fab {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     width: 65px;
     height: 65px;
     border-radius: 50%;
@@ -1538,12 +1561,51 @@ body {
     margin-top: 2px;
 }
 
+/* Floating Save Button */
+.save-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    border: none;
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 500;
+}
+
+.save-fab:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(76, 175, 80, 0.5);
+}
+
+.save-fab-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.save-fab-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-top: 2px;
+}
+
 /* Cardiac Page */
 .cardiac-page {
     min-height: 100vh;
     background: rgba(0, 0, 0, 0.85);
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .cardiac-header {
@@ -1553,6 +1615,7 @@ body {
     padding: 15px 20px;
     background: rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
 }
 
 .back-btn {
@@ -1583,6 +1646,7 @@ body {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     gap: 20px;

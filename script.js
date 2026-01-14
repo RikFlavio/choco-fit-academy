@@ -204,8 +204,33 @@ function setupEventListeners() {
     // Progressive toggle
     document.getElementById('exercise-progressive').addEventListener('change', (e) => {
         const isProgressive = e.target.checked;
-        document.getElementById('standard-reps-group').classList.toggle('hidden', isProgressive);
+        const repsMinInput = document.getElementById('exercise-reps-min');
+        const repsMaxInput = document.getElementById('exercise-reps-max');
+        const repsInput = document.getElementById('exercise-reps');
+        const repsLabel = document.getElementById('exercise-reps-label');
+        
+        // Mostra/nascondi solo i campi min/max
         document.getElementById('progressive-reps-group').classList.toggle('hidden', !isProgressive);
+        
+        if (isProgressive) {
+            // Attiva campi min/max e imposta valori default se erano 0
+            repsMinInput.disabled = false;
+            repsMaxInput.disabled = false;
+            if (parseInt(repsMinInput.value) === 0) repsMinInput.value = 10;
+            if (parseInt(repsMaxInput.value) === 0) repsMaxInput.value = 12;
+            // Reps diventa read-only (mostra posizione corrente)
+            repsInput.readOnly = true;
+            repsLabel.textContent = 'Ripetizione corrente';
+        } else {
+            // Disattiva campi min/max e resetta a 0
+            repsMinInput.value = 0;
+            repsMaxInput.value = 0;
+            repsMinInput.disabled = true;
+            repsMaxInput.disabled = true;
+            // Reps torna editabile
+            repsInput.readOnly = false;
+            repsLabel.textContent = 'Ripetizioni';
+        }
     });
     
     // App screen
@@ -242,6 +267,9 @@ function setupEventListeners() {
     document.getElementById('cardiac-fab').addEventListener('click', () => {
         showScreen('cardiac');
     });
+    
+    // Save FAB
+    document.getElementById('save-fab').addEventListener('click', saveWorkoutChanges);
     
     // Cardiac back button
     document.getElementById('cardiac-back-btn').addEventListener('click', () => {
@@ -514,7 +542,7 @@ async function updateExerciseOrder(dayId, container) {
 
 function createExerciseItem(exercise, number) {
     let repsDisplay;
-    if (exercise.isProgressive) {
+    if (exercise.isProgressive && exercise.repsMin > 0 && exercise.repsMax > 0) {
         repsDisplay = `${exercise.repsMin}→${exercise.repsMax}`;
     } else {
         repsDisplay = `${exercise.sets}×${exercise.reps}`;
@@ -649,13 +677,31 @@ function openExerciseModal(dayId, exercise = null) {
     document.getElementById('exercise-rest').value = exercise ? exercise.rest : 60;
     
     // Progressive fields
-    const isProgressive = exercise ? exercise.isProgressive : false;
+    const isProgressive = exercise ? (exercise.isProgressive || false) : false;
     document.getElementById('exercise-progressive').checked = isProgressive;
-    document.getElementById('exercise-reps-min').value = exercise ? (exercise.repsMin || 10) : 10;
-    document.getElementById('exercise-reps-max').value = exercise ? (exercise.repsMax || 12) : 12;
     
-    // Show/hide appropriate fields
-    document.getElementById('standard-reps-group').classList.toggle('hidden', isProgressive);
+    const repsMinInput = document.getElementById('exercise-reps-min');
+    const repsMaxInput = document.getElementById('exercise-reps-max');
+    const repsInput = document.getElementById('exercise-reps');
+    const repsLabel = document.getElementById('exercise-reps-label');
+    
+    if (isProgressive) {
+        repsMinInput.value = exercise.repsMin || 10;
+        repsMaxInput.value = exercise.repsMax || 12;
+        repsMinInput.disabled = false;
+        repsMaxInput.disabled = false;
+        repsInput.readOnly = true;
+        repsLabel.textContent = 'Ripetizione corrente';
+    } else {
+        repsMinInput.value = 0;
+        repsMaxInput.value = 0;
+        repsMinInput.disabled = true;
+        repsMaxInput.disabled = true;
+        repsInput.readOnly = false;
+        repsLabel.textContent = 'Ripetizioni';
+    }
+    
+    // Mostra/nascondi solo i campi min/max (Ripetizioni sempre visibile)
     document.getElementById('progressive-reps-group').classList.toggle('hidden', !isProgressive);
     
     modals.exercise.classList.remove('hidden');
@@ -696,8 +742,8 @@ async function saveExerciseModal() {
         reps = repsMin; // Valore base per compatibilità
     } else {
         reps = parseInt(document.getElementById('exercise-reps').value) || 10;
-        repsMin = null;
-        repsMax = null;
+        repsMin = 0;
+        repsMax = 0;
     }
     
     const exerciseData = {
@@ -858,10 +904,11 @@ function createSessionCard(day, exercises, isActive) {
 function createExerciseCard(exercise, number) {
     let repsHtml;
     
-    if (exercise.isProgressive) {
+    if (exercise.isProgressive && exercise.repsMin > 0 && exercise.repsMax > 0) {
         // Genera le opzioni del select da min a max
         let options = '';
-        const currentRep = exercise.currentRep || exercise.repsMin;
+        // Usa reps come valore corrente, default a repsMin
+        const currentRep = exercise.reps || exercise.repsMin;
         for (let i = exercise.repsMin; i <= exercise.repsMax; i++) {
             const selected = i === currentRep ? 'selected' : '';
             options += `<option value="${i}" ${selected}>${i}</option>`;
@@ -1146,7 +1193,7 @@ async function handleExport() {
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `chocofit-${new Date().toISOString().split('T')[0]}.chocofit`;
+    a.download = `chocofit-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -1231,6 +1278,51 @@ document.querySelectorAll('input[type="number"], input[type="text"]').forEach(in
         this.style.fontSize = '16px';
     });
 });
+
+// ==================== SAVE WORKOUT CHANGES ====================
+async function saveWorkoutChanges() {
+    const activeSession = document.querySelector('.session-card.active');
+    if (!activeSession) {
+        showToast('Nessuna sessione attiva');
+        return;
+    }
+    
+    const exerciseCards = activeSession.querySelectorAll('.exercise-card');
+    let updatesCount = 0;
+    
+    for (const card of exerciseCards) {
+        const exerciseId = parseInt(card.dataset.exerciseId);
+        const updates = {};
+        
+        // Get weight
+        const weightInput = card.querySelector('.kg-input');
+        if (weightInput) {
+            updates.weight = parseFloat(weightInput.value) || 0;
+        }
+        
+        // Get sets/reps from buttons (non-progressive)
+        const setsBtn = card.querySelector('.sets-reps-btn[data-field="sets"]');
+        const repsBtn = card.querySelector('.sets-reps-btn[data-field="reps"]');
+        if (setsBtn) {
+            updates.sets = parseInt(setsBtn.dataset.value) || 3;
+        }
+        if (repsBtn) {
+            updates.reps = parseInt(repsBtn.dataset.value) || 10;
+        }
+        
+        // Get reps from select (progressive) - salva in reps
+        const repsSelect = card.querySelector('.reps-select');
+        if (repsSelect) {
+            updates.reps = parseInt(repsSelect.value);
+        }
+        
+        // Update database
+        await db.exercises.update(exerciseId, updates);
+        updatesCount++;
+    }
+    
+    showToast(`Salvato! ${updatesCount} esercizi aggiornati`);
+}
 
 // ==================== CARDIAC LOAD ====================
 const DAYS_OF_WEEK = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];

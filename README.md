@@ -1,111 +1,123 @@
-# 🍫💪 ChocoFit Academy
+# ChocoFit Academy 🍫💪
 
-Una Progressive Web App (PWA) per tracciare i tuoi allenamenti in palestra, creata per uso personale e come progetto di apprendimento.
+App PWA per la gestione personalizzata degli allenamenti in palestra.
 
-![ChocoFit Logo](img/LogoChoco.png)
+## Funzionalità
 
-## 📱 Caratteristiche
+### 📋 Configurazione Scheda
 
-- **📋 Tre schede di allenamento** (A, B, C) organizzate per giorno
-- **⏱️ Timer integrato** con notifiche sonore e vibrazione per il riposo tra le serie
-- **💾 Salvataggio automatico** dei pesi e ripetizioni in localStorage
-- **🎯 Interfaccia intuitiva** con design glassmorphism e animazioni fluide
-- **📱 Progressive Web App** - installabile su smartphone come app nativa
-- **🎬 Link ai video tutorial** per ogni esercizio
-- **📊 Tracker dinamico** con evidenziazione dell'esercizio corrente
+- **Crea giorni di allenamento** con nome e emoji personalizzati
+- **Aggiungi esercizi** con serie, ripetizioni, peso e tempo di riposo
+- **Ripetizioni progressive** - imposta un range (es. 14→17) per esercizi a scalare
+- **Drag & drop** per riordinare gli esercizi
+- **Modifica/Elimina** giorni ed esercizi
 
-## 🎨 Design
+### 🏋️ App Allenamento
 
-- Interfaccia moderna con effetti glassmorphism e backdrop-filter blur
-- Animazioni stagger per un'esperienza fluida
-- Design mobile-first ottimizzato per l'uso in palestra
-- Tema con colori energici (arancione #ff6b35)
-- Background personalizzato con overlay semi-trasparente
+- **Navigazione intuitiva** tra i giorni con icone emoji (scroll orizzontale a 2 icone)
+- **Timer** con suono e vibrazione al termine
+- **Modifica al volo** peso, serie e ripetizioni
+- **Dropdown progressivo** per tracciare la ripetizione corrente
+- **Bottone Salva** (💾) per sincronizzare le modifiche con la configurazione
 
-## 🚀 Come Usare
+### ❤️ Carico Cardiaco (opzionale)
 
-### Online
+- **Toggle** per attivare/disattivare in Configura Scheda
+- **Calcolo automatico** del target settimanale (+10% sulla media precedente)
+- **Tracking giornaliero** con formula dinamica:
+  - `Target oggi = (Target settimanale - Totale fatto) ÷ Giorni rimasti`
+- **Floating button** con target del giorno
+- **Reset automatico** ogni lunedì
 
-Visita il sito: [ChocoFit Academy](https://RikFlavio.github.io/choco-fit-academy)
+### 💾 Gestione Dati
 
-### Installare come App (PWA)
+- **Export** scheda in formato `.json`
+- **Import** scheda da file `.json`
+- **Cancella scheda** con conferma
+- **Dati locali** - tutto salvato nel browser (IndexedDB), nessun server
 
-**Su iOS:**
+### 📱 PWA
 
-1. Apri il sito in Safari
-2. Tocca il pulsante "Condividi"
-3. Seleziona "Aggiungi a Home"
+- **Installabile** su smartphone come app nativa
+- **Funziona offline** dopo la prima installazione
+- **Mobile-first** - ottimizzato per schermi touch
 
-**Su Android:**
-
-1. Apri il sito in Chrome
-2. Tocca i tre puntini in alto
-3. Seleziona "Installa app" o "Aggiungi a Home"
-
-## 🛠️ Tecnologie Utilizzate
-
-- **HTML5** - Struttura semantica
-- **CSS3** - Animazioni, glassmorphism, responsive design
-- **JavaScript (Vanilla)** - Logica dell'app, timer, localStorage
-- **Web Audio API** - Notifiche sonore
-- **PWA** - Manifest, Service Worker ready
-
-## 📂 Struttura del Progetto
+## Struttura File
 
 ```
-choco-fit-academy/
-├── index.html          # Pagina principale
-├── style.css           # Stili e animazioni
-├── script.js           # Logica dell'app
+chocofit/
+├── index.html          # Struttura HTML (4 schermate + modali)
+├── style.css           # Stili CSS (mobile-first, glassmorphism)
+├── script.js           # Logica JavaScript (IndexedDB, eventi)
 ├── site.webmanifest    # Configurazione PWA
-├── favicon.ico/.svg    # Favicon
+├── favicon.ico         # Icona browser
+├── favicon.svg         # Icona vettoriale
 └── img/
-    ├── LogoChoco.png   # Logo principale
-    ├── AppPalestra.jpeg # Background
-    └── icons/          # Icone per PWA
+    ├── LogoChoco.png       # Logo app
+    ├── AppPalestra.jpeg    # Sfondo
+    └── icons/              # Icone PWA (192x192, 512x512)
 ```
 
-## ✨ Funzionalità Principali
+## Tecnologie
 
-### Timer per il Riposo
+- **HTML5** - struttura semantica
+- **CSS3** - Flexbox, Grid, animazioni, glassmorphism
+- **JavaScript ES6+** - async/await, moduli
+- **Dexie.js** - wrapper IndexedDB per storage locale
+- **PWA** - Service Worker, Web App Manifest
 
-- Timer configurabile (default 60 secondi)
-- Notifica sonora e vibrazione al termine
-- Controlli Start/Stop/Reset
+## Installazione
 
-### Tracking Allenamenti
+1. Apri l'URL nel browser
+2. Su mobile: "Aggiungi a schermata Home"
 
-- Salvataggio automatico dei pesi utilizzati
-- Selezione ripetizioni personalizzabile
-- Organizzazione per giorno della settimana (Lunedì, Mercoledì, Venerdì)
+## Utilizzo
 
-### Link Video Tutorial
+### Prima configurazione
 
-- Ogni esercizio ha un link diretto a YouTube
-- Tutorial per la corretta esecuzione
+1. Clicca "Crea il tuo allenamento"
+2. Aggiungi i giorni (es. Lunedì 🏋️, Mercoledì 💪)
+3. Per ogni giorno, aggiungi gli esercizi
+4. Clicca "Inizia Allenamento"
 
-## 🎯 Obiettivo del Progetto
+### Durante l'allenamento
 
-Questo progetto è stato creato principalmente per:
+1. Naviga tra i giorni con le icone in alto
+2. Modifica peso/reps al volo
+3. Usa il timer per il riposo
+4. Clicca 💾 per salvare le modifiche
 
-- ✅ Uso personale durante gli allenamenti in palestra
-- ✅ Imparare a programmare con HTML, CSS e JavaScript
-- ✅ Sperimentare con PWA e moderne tecnologie web
-- ✅ Creare un'interfaccia utente fluida e piacevole
+### Ripetizioni Progressive
 
-## 👨‍💻 Autore
+1. In Modifica Esercizio, attiva "Ripetizioni progressive"
+2. Imposta Reps Min (es. 14) e Reps Max (es. 17)
+3. Nell'app vedrai un dropdown con 14, 15, 16, 17
+4. Seleziona la ripetizione corrente e salva
 
-**PwR**
+### Carico Cardiaco
 
-- Progetto personale • 2025
-- Made with Love ❤️
+1. In Configura Scheda, attiva "Carico Cardiaco"
+2. Clicca il bottone ❤️ nell'app
+3. Inserisci la media della settimana scorsa
+4. Il sistema calcola il target (+10%)
+5. Ogni giorno inserisci il valore fatto
 
-## 📝 Note
+### Backup
 
-- L'app salva i dati localmente nel browser (localStorage)
-- Non richiede connessione internet dopo il primo caricamento (quando configurata come PWA)
-- Ottimizzata per dispositivi mobili
+- **Export**: Configura Scheda → icona download → salva `.json`
+- **Import**: Configura Scheda → icona upload → seleziona `.json`
+
+## Browser Supportati
+
+- Chrome (consigliato)
+- Firefox
+- Safari
+- Edge
+
+## Licenza
+
+© 2025 ChocoFit Academy - Tutti i diritti riservati
 
 ---
 
-**© 2025 ChocoFitAccademy** • Progetto open source per uso personale ed educativo
+Sviluppato da PwR con ❤️ per gli amanti del fitness
