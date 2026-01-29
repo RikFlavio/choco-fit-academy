@@ -429,6 +429,21 @@
     <!-- Dexie.js for IndexedDB -->
     <script src="https://unpkg.com/dexie@3.2.4/dist/dexie.min.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('SW registrato:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('SW registrazione fallita:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>

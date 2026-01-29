@@ -1321,7 +1321,36 @@ async function saveWorkoutChanges() {
         updatesCount++;
     }
     
-    showToast(`Salvato! ${updatesCount} esercizi aggiornati`);
+    // Scarica backup automatico
+    await downloadBackup();
+    
+    showToast(`Salvato! ${updatesCount} esercizi + backup`);
+}
+
+async function downloadBackup() {
+    const days = await db.days.orderBy('order').toArray();
+    const exercises = await db.exercises.toArray();
+    const settings = await db.settings.toArray();
+    const cardiac = await db.cardiac.toArray();
+    
+    const backup = {
+        version: 2,
+        exportDate: new Date().toISOString(),
+        days,
+        exercises,
+        settings,
+        cardiac
+    };
+    
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'chocofit-backup.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 // ==================== CARDIAC LOAD ====================
