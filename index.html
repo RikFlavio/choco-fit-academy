@@ -255,11 +255,51 @@
                             <span class="value" id="cardiac-total-done">0</span>
                         </div>
                         <div class="cardiac-summary-item">
+                            <span class="label">Media/giorno</span>
+                            <span class="value" id="cardiac-avg-done">--</span>
+                        </div>
+                        <div class="cardiac-summary-item">
                             <span class="label">Rimasto</span>
                             <span class="value" id="cardiac-remaining">--</span>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Obiettivo Minimo -->
+                <div class="cardiac-card">
+                    <div class="cardiac-card-title">Obiettivo Minimo Settimanale</div>
+                    <div class="cardiac-goal-row">
+                        <div class="cardiac-goal-item">
+                            <span class="label">Target minimo</span>
+                            <span class="value goal-target">190</span>
+                        </div>
+                        <div class="cardiac-goal-item">
+                            <span class="label">Distanza</span>
+                            <span class="value" id="cardiac-goal-distance">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== NOTES MODAL ==================== -->
+    <div id="notes-modal" class="modal fullscreen hidden">
+        <div class="notes-modal-content">
+            <div class="notes-header">
+                <h2 id="notes-modal-title">Note</h2>
+                <button class="modal-close" id="notes-modal-close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="notes-body">
+                <textarea id="notes-textarea" placeholder="Scrivi le tue note qui..."></textarea>
+            </div>
+            <div class="notes-footer">
+                <button class="modal-btn save" id="notes-save-btn">Salva Note</button>
             </div>
         </div>
     </div>

@@ -257,6 +257,13 @@ function setupEventListeners() {
         if (e.target === modals.exercise) closeExerciseModal();
     });
     
+    // Notes modal
+    document.getElementById('notes-modal-close').addEventListener('click', closeNotesModal);
+    document.getElementById('notes-save-btn').addEventListener('click', saveNotes);
+    document.getElementById('notes-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'notes-modal') closeNotesModal();
+    });
+    
     // Cardiac toggle
     document.getElementById('cardiac-toggle').addEventListener('change', async (e) => {
         await db.settings.put({ key: 'cardiacEnabled', value: e.target.checked });
@@ -898,6 +905,14 @@ function createSessionCard(day, exercises, isActive) {
         });
     });
     
+    // Add event listeners for notes buttons
+    card.querySelectorAll('.notes-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const exerciseId = parseInt(btn.dataset.exerciseId);
+            openNotesModal(exerciseId);
+        });
+    });
+    
     return card;
 }
 
@@ -937,6 +952,7 @@ function createExerciseCard(exercise, number) {
             <span style="color: white; font-size: 18px;">×</span>
         `;
     }
+    const hasNotes = exercise.notes && exercise.notes.trim().length > 0;
     
     return `
         <div class="exercise-card" data-exercise-id="${exercise.id}">
@@ -945,6 +961,9 @@ function createExerciseCard(exercise, number) {
                 <div class="exercise-info">
                     <div class="exercise-name">${exercise.name}</div>
                 </div>
+                <button class="notes-btn ${hasNotes ? 'has-notes' : ''}" data-exercise-id="${exercise.id}" title="Note">
+                    📝
+                </button>
             </div>
             <div class="exercise-details">
                 <div class="exercise-details-row">
@@ -1235,6 +1254,8 @@ async function handleImport(event) {
         // Clear existing data
         await db.days.clear();
         await db.exercises.clear();
+        await db.settings.clear();
+        await db.cardiac.clear();
         
         // Import days and create ID mapping
         const dayIdMap = {};
@@ -1250,6 +1271,20 @@ async function handleImport(event) {
             delete exercise.id;
             exercise.dayId = dayIdMap[exercise.dayId];
             await db.exercises.add(exercise);
+        }
+        
+        // Import settings (if present)
+        if (data.settings && Array.isArray(data.settings)) {
+            for (const setting of data.settings) {
+                await db.settings.put(setting);
+            }
+        }
+        
+        // Import cardiac data (if present)
+        if (data.cardiac && Array.isArray(data.cardiac)) {
+            for (const cardiacItem of data.cardiac) {
+                await db.cardiac.put(cardiacItem);
+            }
         }
         
         showToast('Scheda importata con successo! 💪');
@@ -1278,6 +1313,46 @@ document.querySelectorAll('input[type="number"], input[type="text"]').forEach(in
         this.style.fontSize = '16px';
     });
 });
+
+// ==================== NOTES MODAL ====================
+let currentNotesExerciseId = null;
+
+async function openNotesModal(exerciseId) {
+    currentNotesExerciseId = exerciseId;
+    
+    const exercise = await db.exercises.get(exerciseId);
+    if (!exercise) return;
+    
+    document.getElementById('notes-modal-title').textContent = `Note - ${exercise.name}`;
+    document.getElementById('notes-textarea').value = exercise.notes || '';
+    document.getElementById('notes-modal').classList.remove('hidden');
+    
+    // Focus sulla textarea
+    setTimeout(() => {
+        document.getElementById('notes-textarea').focus();
+    }, 100);
+}
+
+function closeNotesModal() {
+    document.getElementById('notes-modal').classList.add('hidden');
+    currentNotesExerciseId = null;
+}
+
+async function saveNotes() {
+    if (!currentNotesExerciseId) return;
+    
+    const notes = document.getElementById('notes-textarea').value.trim();
+    await db.exercises.update(currentNotesExerciseId, { notes });
+    
+    // Aggiorna il bottone per mostrare che ci sono note
+    const btn = document.querySelector(`.notes-btn[data-exercise-id="${currentNotesExerciseId}"]`);
+    if (btn) {
+        btn.classList.toggle('has-notes', notes.length > 0);
+    }
+    
+    showToast('Note salvate! 📝');
+    closeNotesModal();
+}
 
 // ==================== SAVE WORKOUT CHANGES ====================
 async function saveWorkoutChanges() {
@@ -1503,6 +1578,8 @@ function generateWeekGrid(cardiacData) {
 }
 
 function updateCardiacDisplay(cardiacData) {
+    const WEEKLY_GOAL = 190;
+    
     // Target display
     const targetDisplay = document.getElementById('cardiac-target-display');
     targetDisplay.textContent = cardiacData.targetAvg ? cardiacData.targetAvg.toFixed(1) : '--';
@@ -1516,11 +1593,30 @@ function updateCardiacDisplay(cardiacData) {
     const totalDone = cardiacData.dailyValues.reduce((sum, val) => sum + (val || 0), 0);
     document.getElementById('cardiac-total-done').textContent = totalDone.toFixed(1);
     
+    // Conta giorni con valori inseriti
+    const daysWithValues = cardiacData.dailyValues.filter(val => val !== null && val > 0).length;
+    
+    // Media giornaliera
+    const avgDone = daysWithValues > 0 ? totalDone / daysWithValues : 0;
+    document.getElementById('cardiac-avg-done').textContent = 
+        daysWithValues > 0 ? avgDone.toFixed(1) : '--';
+    
     // Remaining
     const weeklyTotal = cardiacData.targetAvg * 7;
     const remaining = weeklyTotal - totalDone;
     document.getElementById('cardiac-remaining').textContent = 
         cardiacData.targetAvg ? remaining.toFixed(1) : '--';
+    
+    // Distanza dall'obiettivo minimo (190)
+    const goalDistance = totalDone - WEEKLY_GOAL;
+    const goalDistanceEl = document.getElementById('cardiac-goal-distance');
+    if (goalDistance >= 0) {
+        goalDistanceEl.textContent = '+' + goalDistance.toFixed(1);
+        goalDistanceEl.className = 'value positive';
+    } else {
+        goalDistanceEl.textContent = goalDistance.toFixed(1);
+        goalDistanceEl.className = 'value negative';
+    }
     
     // Update FAB
     updateFabValue(cardiacData);

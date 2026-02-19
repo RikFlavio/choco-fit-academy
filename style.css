@@ -1599,6 +1599,103 @@ body {
     margin-top: 2px;
 }
 
+/* Notes Button */
+.notes-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.notes-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.notes-btn.has-notes {
+    background: rgba(255, 193, 7, 0.3);
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
+}
+
+/* Notes Modal Fullscreen */
+.modal.fullscreen {
+    padding: 0;
+}
+
+.notes-modal-content {
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.98);
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+}
+
+.notes-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 152, 0, 0.2));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.notes-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.notes-body {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#notes-textarea {
+    flex: 1;
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+}
+
+#notes-textarea:focus {
+    border-color: #ffc107;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#notes-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.notes-footer {
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.notes-footer .modal-btn.save {
+    width: 100%;
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+}
+
 /* Cardiac Page */
 .cardiac-page {
     min-height: 100vh;
@@ -1803,6 +1900,42 @@ body {
     font-size: 20px;
     font-weight: 700;
     color: white;
+}
+
+/* Cardiac Goal Row */
+.cardiac-goal-row {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.cardiac-goal-item {
+    text-align: center;
+}
+
+.cardiac-goal-item .label {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 5px;
+}
+
+.cardiac-goal-item .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.cardiac-goal-item .value.goal-target {
+    color: #4caf50;
+}
+
+.cardiac-goal-item .value.positive {
+    color: #4caf50;
+}
+
+.cardiac-goal-item .value.negative {
+    color: #ff6b6b;
 }
 
 .toast.show {
