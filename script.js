@@ -114,11 +114,12 @@ function showToast(message, duration = 3000) {
 
 // ==================== DATABASE (IndexedDB con Dexie) ====================
 const db = new Dexie('ChocoFitDB');
-db.version(2).stores({
+db.version(3).stores({
     days: '++id, name, emoji, order',
     exercises: '++id, dayId, name, sets, reps, weight, rest, order',
     settings: 'key',
-    cardiac: 'key'
+    cardiac: 'key',
+    bodyComp: '++id, date'
 });
 
 // ==================== STATE ====================
@@ -131,7 +132,8 @@ const screens = {
     welcome: document.getElementById('welcome-screen'),
     setup: document.getElementById('setup-screen'),
     app: document.getElementById('app-screen'),
-    cardiac: document.getElementById('cardiac-screen')
+    cardiac: document.getElementById('cardiac-screen'),
+    bodyComp: document.getElementById('body-comp-screen')
 };
 
 const modals = {
@@ -169,6 +171,8 @@ function showScreen(screenName) {
         loadSetupScreen();
     } else if (screenName === 'cardiac') {
         loadCardiacPage();
+    } else if (screenName === 'bodyComp') {
+        loadBodyCompPage();
     }
 }
 
@@ -291,6 +295,22 @@ function setupEventListeners() {
         cardiacData.targetAvg = Math.round(lastWeek * 1.1 * 10) / 10; // +10%
         await saveCardiacData(cardiacData);
         updateCardiacDisplay(cardiacData);
+    });
+    
+    // Body Composition
+    document.getElementById('open-body-comp-btn').addEventListener('click', () => {
+        showScreen('bodyComp');
+    });
+    
+    document.getElementById('body-comp-back-btn').addEventListener('click', () => {
+        showScreen('setup');
+    });
+    
+    document.getElementById('save-body-comp-btn').addEventListener('click', saveBodyCompEntry);
+    
+    // Auto-calculate kg when inputs change
+    ['body-weight', 'body-fat-pct', 'body-muscle-pct'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calculateBodyCompKg);
     });
 }
 
@@ -1256,6 +1276,7 @@ async function handleImport(event) {
         await db.exercises.clear();
         await db.settings.clear();
         await db.cardiac.clear();
+        await db.bodyComp.clear();
         
         // Import days and create ID mapping
         const dayIdMap = {};
@@ -1284,6 +1305,14 @@ async function handleImport(event) {
         if (data.cardiac && Array.isArray(data.cardiac)) {
             for (const cardiacItem of data.cardiac) {
                 await db.cardiac.put(cardiacItem);
+            }
+        }
+        
+        // Import body composition data (if present)
+        if (data.bodyComp && Array.isArray(data.bodyComp)) {
+            for (const bodyCompItem of data.bodyComp) {
+                delete bodyCompItem.id; // Remove old id
+                await db.bodyComp.add(bodyCompItem);
             }
         }
         
@@ -1407,14 +1436,16 @@ async function downloadBackup() {
     const exercises = await db.exercises.toArray();
     const settings = await db.settings.toArray();
     const cardiac = await db.cardiac.toArray();
+    const bodyComp = await db.bodyComp.toArray();
     
     const backup = {
-        version: 2,
+        version: 3,
         exportDate: new Date().toISOString(),
         days,
         exercises,
         settings,
-        cardiac
+        cardiac,
+        bodyComp
     };
     
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
@@ -1621,3 +1652,105 @@ function updateCardiacDisplay(cardiacData) {
     // Update FAB
     updateFabValue(cardiacData);
 }
+
+
+// ==================== BODY COMPOSITION ====================
+function calculateBodyCompKg() {
+    const weight = parseFloat(document.getElementById("body-weight").value) || 0;
+    const fatPct = parseFloat(document.getElementById("body-fat-pct").value) || 0;
+    const musclePct = parseFloat(document.getElementById("body-muscle-pct").value) || 0;
+    
+    const fatKg = weight * (fatPct / 100);
+    const muscleKg = weight * (musclePct / 100);
+    
+    document.getElementById("calc-fat-kg").textContent = weight > 0 ? fatKg.toFixed(2) + " kg" : "-- kg";
+    document.getElementById("calc-muscle-kg").textContent = weight > 0 ? muscleKg.toFixed(2) + " kg" : "-- kg";
+}
+
+async function saveBodyCompEntry() {
+    const weight = parseFloat(document.getElementById("body-weight").value);
+    const fatPct = parseFloat(document.getElementById("body-fat-pct").value);
+    const musclePct = parseFloat(document.getElementById("body-muscle-pct").value);
+    
+    if (!weight || !fatPct || !musclePct) {
+        showToast("Compila tutti i campi");
+        return;
+    }
+    
+    const fatKg = Math.round(weight * (fatPct / 100) * 100) / 100;
+    const muscleKg = Math.round(weight * (musclePct / 100) * 100) / 100;
+    
+    const entry = {
+        date: new Date().toISOString(),
+        weight,
+        fatPct,
+        fatKg,
+        musclePct,
+        muscleKg
+    };
+    
+    await db.bodyComp.add(entry);
+    
+    // Clear inputs
+    document.getElementById("body-weight").value = "";
+    document.getElementById("body-fat-pct").value = "";
+    document.getElementById("body-muscle-pct").value = "";
+    document.getElementById("calc-fat-kg").textContent = "-- kg";
+    document.getElementById("calc-muscle-kg").textContent = "-- kg";
+    
+    showToast("Misurazione salvata! ⚖️");
+    loadBodyCompPage();
+}
+
+async function loadBodyCompPage() {
+    const entries = await db.bodyComp.orderBy("date").reverse().toArray();
+    
+    // Update last stats
+    if (entries.length > 0) {
+        const last = entries[0];
+        document.getElementById("last-weight").textContent = last.weight.toFixed(1);
+        document.getElementById("last-fat").textContent = last.fatKg.toFixed(2);
+        document.getElementById("last-muscle").textContent = last.muscleKg.toFixed(2);
+        document.getElementById("last-body-date").textContent = formatDate(last.date);
+    } else {
+        document.getElementById("last-weight").textContent = "--";
+        document.getElementById("last-fat").textContent = "--";
+        document.getElementById("last-muscle").textContent = "--";
+        document.getElementById("last-body-date").textContent = "--";
+    }
+    
+    // Update history list
+    const historyList = document.getElementById("body-history-list");
+    
+    if (entries.length === 0) {
+        historyList.innerHTML = "<div class=\"body-history-empty\">Nessuna misurazione registrata</div>";
+        return;
+    }
+    
+    historyList.innerHTML = entries.map(entry => `
+        <div class="body-history-item" data-id="${entry.id}">
+            <span class="history-date">${formatDate(entry.date)}</span>
+            <div class="history-values">
+                <span class="weight">${entry.weight.toFixed(1)}</span>
+                <span class="fat">${entry.fatKg.toFixed(2)}</span>
+                <span class="muscle">${entry.muscleKg.toFixed(2)}</span>
+            </div>
+            <button class="history-delete-btn" onclick="deleteBodyCompEntry(${entry.id})">🗑️</button>
+        </div>
+    `).join("");
+}
+
+async function deleteBodyCompEntry(id) {
+    const confirmed = await showConfirm("Eliminare questa misurazione?");
+    if (confirmed) {
+        await db.bodyComp.delete(id);
+        showToast("Misurazione eliminata");
+        loadBodyCompPage();
+    }
+}
+
+function formatDate(isoString) {
+    const date = new Date(isoString);
+    return date.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" });
+}
+

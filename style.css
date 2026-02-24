@@ -489,12 +489,12 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 15px 20px;
+    padding: 10px 15px;
     background: rgba(0, 0, 0, 0.9);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .start-workout-btn {
@@ -502,13 +502,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 16px;
+    gap: 8px;
+    padding: 12px;
     background: linear-gradient(135deg, #ff6b35, #ff8c42);
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -528,18 +528,18 @@ body {
 
 .setup-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .action-btn {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
+    border-radius: 10px;
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1694,6 +1694,274 @@ body {
 .notes-footer .modal-btn.save {
     width: 100%;
     background: linear-gradient(135deg, #ffc107, #ff9800);
+}
+
+/* Body Comp Button in Settings */
+.body-comp-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.body-comp-btn:active {
+    transform: scale(0.98);
+}
+
+/* Body Composition Page */
+.body-comp-page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 40, 30, 0.95) 100%);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.body-comp-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+    flex-shrink: 0;
+}
+
+.body-comp-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.body-comp-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 40px;
+}
+
+.body-comp-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.body-comp-card.input-card {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(46, 125, 50, 0.1));
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.body-comp-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.body-comp-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.body-comp-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.body-comp-input-group label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+}
+
+.body-comp-input-group input {
+    padding: 12px 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.body-comp-input-group input:focus {
+    border-color: #4caf50;
+}
+
+.body-comp-calculated {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.calc-item {
+    text-align: center;
+}
+
+.calc-label {
+    display: block;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 4px;
+}
+
+.calc-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #4caf50;
+}
+
+.save-body-comp-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.save-body-comp-btn:active {
+    transform: scale(0.98);
+}
+
+/* Stats Card */
+.body-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.body-stat {
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.body-stat .stat-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.body-stat .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.body-stat.fat .stat-value {
+    color: #ff9800;
+}
+
+.body-stat.muscle .stat-value {
+    color: #4caf50;
+}
+
+.body-stat .stat-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.last-date {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* History List */
+.body-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.body-history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border-left: 3px solid #4caf50;
+}
+
+.history-date {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    min-width: 80px;
+}
+
+.history-values {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.history-values .weight {
+    color: white;
+}
+
+.history-values .fat {
+    color: #ff9800;
+}
+
+.history-values .muscle {
+    color: #4caf50;
+}
+
+.history-delete-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(244, 67, 54, 0.2);
+    border: none;
+    border-radius: 6px;
+    color: #f44336;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.body-history-empty {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 20px;
+    font-size: 14px;
 }
 
 /* Cardiac Page */

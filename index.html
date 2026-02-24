@@ -105,6 +105,20 @@
                     </label>
                 </div>
             </div>
+            
+            <!-- Body Composition -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <span class="settings-icon">⚖️</span>
+                    <span class="settings-title">Peso & Composizione</span>
+                </div>
+                <div class="settings-card-body">
+                    <p class="settings-description">Traccia peso, grasso e massa muscolare</p>
+                    <button id="open-body-comp-btn" class="body-comp-btn">
+                        <span>📊 Apri Tracker</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Setup Footer -->
@@ -205,6 +219,88 @@
                 <span class="save-fab-icon">💾</span>
                 <span class="save-fab-text">Salva</span>
             </button>
+        </div>
+    </div>
+    
+    <!-- ==================== BODY COMPOSITION PAGE ==================== -->
+    <div id="body-comp-screen" class="screen">
+        <div class="body-comp-page">
+            <div class="body-comp-header">
+                <button id="body-comp-back-btn" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <h1 class="body-comp-title">⚖️ Peso & Composizione</h1>
+            </div>
+            
+            <div class="body-comp-content">
+                <!-- Input Form -->
+                <div class="body-comp-card input-card">
+                    <div class="body-comp-card-title">Nuova Misurazione</div>
+                    <div class="body-comp-form">
+                        <div class="body-comp-input-group">
+                            <label>Peso (kg)</label>
+                            <input type="number" id="body-weight" placeholder="75.0" step="0.1" min="30" max="200">
+                        </div>
+                        <div class="body-comp-input-group">
+                            <label>Grasso (%)</label>
+                            <input type="number" id="body-fat-pct" placeholder="20.0" step="0.1" min="3" max="60">
+                        </div>
+                        <div class="body-comp-input-group">
+                            <label>Muscolo (%)</label>
+                            <input type="number" id="body-muscle-pct" placeholder="35.0" step="0.1" min="10" max="60">
+                        </div>
+                    </div>
+                    
+                    <!-- Calculated Values -->
+                    <div class="body-comp-calculated">
+                        <div class="calc-item">
+                            <span class="calc-label">Grasso</span>
+                            <span class="calc-value" id="calc-fat-kg">-- kg</span>
+                        </div>
+                        <div class="calc-item">
+                            <span class="calc-label">Muscolo</span>
+                            <span class="calc-value" id="calc-muscle-kg">-- kg</span>
+                        </div>
+                    </div>
+                    
+                    <button id="save-body-comp-btn" class="save-body-comp-btn">
+                        <span>💾 Salva Misurazione</span>
+                    </button>
+                </div>
+                
+                <!-- Current Stats -->
+                <div class="body-comp-card stats-card">
+                    <div class="body-comp-card-title">Ultimo Rilevamento</div>
+                    <div class="body-stats-grid">
+                        <div class="body-stat">
+                            <div class="stat-icon">⚖️</div>
+                            <div class="stat-value" id="last-weight">--</div>
+                            <div class="stat-label">Peso kg</div>
+                        </div>
+                        <div class="body-stat fat">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-value" id="last-fat">--</div>
+                            <div class="stat-label">Grasso kg</div>
+                        </div>
+                        <div class="body-stat muscle">
+                            <div class="stat-icon">💪</div>
+                            <div class="stat-value" id="last-muscle">--</div>
+                            <div class="stat-label">Muscolo kg</div>
+                        </div>
+                    </div>
+                    <div class="last-date" id="last-body-date">--</div>
+                </div>
+                
+                <!-- History -->
+                <div class="body-comp-card history-card">
+                    <div class="body-comp-card-title">Storico</div>
+                    <div class="body-history-list" id="body-history-list">
+                        <!-- History items will be added here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
