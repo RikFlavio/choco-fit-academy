@@ -293,9 +293,30 @@
                     <div class="last-date" id="last-body-date">--</div>
                 </div>
                 
+                <!-- BMI Card -->
+                <div class="body-comp-card bmi-card">
+                    <div class="body-comp-card-title">Indice di Massa Corporea (BMI)</div>
+                    <div class="bmi-input-row">
+                        <div class="bmi-input-group">
+                            <label>Altezza (cm)</label>
+                            <input type="number" id="body-height" placeholder="175" min="100" max="250">
+                        </div>
+                        <button id="calc-bmi-btn" class="calc-bmi-btn">Calcola</button>
+                    </div>
+                    <div class="bmi-result" id="bmi-result">
+                        <!-- BMI result will be shown here -->
+                    </div>
+                </div>
+                
                 <!-- History -->
                 <div class="body-comp-card history-card">
-                    <div class="body-comp-card-title">Storico</div>
+                    <div class="history-header">
+                        <div class="body-comp-card-title">Storico</div>
+                        <div class="history-actions">
+                            <button id="edit-history-btn" class="history-action-btn" title="Modifica">✏️</button>
+                            <button id="delete-history-btn" class="history-action-btn delete" title="Elimina">🗑️</button>
+                        </div>
+                    </div>
                     <div class="body-history-list" id="body-history-list">
                         <!-- History items will be added here -->
                     </div>

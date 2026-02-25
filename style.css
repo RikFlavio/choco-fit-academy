@@ -1919,16 +1919,17 @@ body {
 }
 
 .history-date {
-    font-size: 13px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
-    min-width: 80px;
+    min-width: 70px;
 }
 
 .history-values {
     display: flex;
-    gap: 15px;
-    font-size: 14px;
+    gap: 10px;
+    font-size: 13px;
     font-weight: 600;
+    flex: 1;
 }
 
 .history-values .weight {
@@ -1943,25 +1944,190 @@ body {
     color: #4caf50;
 }
 
-.history-delete-btn {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(244, 67, 54, 0.2);
-    border: none;
-    border-radius: 6px;
-    color: #f44336;
-    cursor: pointer;
-    font-size: 14px;
-}
-
 .body-history-empty {
     text-align: center;
     color: rgba(255, 255, 255, 0.4);
     padding: 20px;
     font-size: 14px;
+}
+
+/* History Header with Actions */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.history-header .body-comp-card-title {
+    margin-bottom: 0;
+}
+
+.history-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.history-action-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.history-action-btn:active {
+    transform: scale(0.95);
+}
+
+.history-action-btn.delete {
+    border-color: rgba(244, 67, 54, 0.4);
+}
+
+.history-action-btn.active {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4caf50;
+}
+
+.history-action-btn.delete.active {
+    background: rgba(244, 67, 54, 0.3);
+    border-color: #f44336;
+}
+
+/* History Item - simplified */
+.body-history-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid #4caf50;
+    gap: 10px;
+}
+
+.body-history-item.selected {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4caf50;
+}
+
+.body-history-item.delete-selected {
+    background: rgba(244, 67, 54, 0.2);
+    border-color: #f44336;
+}
+
+.history-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #4caf50;
+    display: none;
+}
+
+.history-checkbox.visible {
+    display: block;
+}
+
+/* BMI Card */
+.bmi-card {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(25, 118, 210, 0.1));
+    border-color: rgba(33, 150, 243, 0.3);
+}
+
+.bmi-input-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+
+.bmi-input-group {
+    flex: 1;
+}
+
+.bmi-input-group label {
+    display: block;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 6px;
+}
+
+.bmi-input-group input {
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.bmi-input-group input:focus {
+    border-color: #2196f3;
+}
+
+.calc-bmi-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.calc-bmi-btn:active {
+    transform: scale(0.98);
+}
+
+.bmi-result {
+    text-align: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: none;
+}
+
+.bmi-result.visible {
+    display: block;
+}
+
+.bmi-value {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.bmi-value.underweight { color: #ffc107; }
+.bmi-value.normal { color: #4caf50; }
+.bmi-value.overweight { color: #ff9800; }
+.bmi-value.obese { color: #f44336; }
+
+.bmi-category {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.bmi-category.underweight { color: #ffc107; }
+.bmi-category.normal { color: #4caf50; }
+.bmi-category.overweight { color: #ff9800; }
+.bmi-category.obese { color: #f44336; }
+
+.bmi-message {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
 }
 
 /* Cardiac Page */

@@ -312,6 +312,13 @@ function setupEventListeners() {
     ['body-weight', 'body-fat-pct', 'body-muscle-pct'].forEach(id => {
         document.getElementById(id).addEventListener('input', calculateBodyCompKg);
     });
+    
+    // BMI calculation
+    document.getElementById('calc-bmi-btn').addEventListener('click', calculateBMI);
+    
+    // History edit/delete mode
+    document.getElementById('edit-history-btn').addEventListener('click', toggleEditMode);
+    document.getElementById('delete-history-btn').addEventListener('click', toggleDeleteMode);
 }
 
 // ==================== SETUP SCREEN ====================
@@ -1655,6 +1662,10 @@ function updateCardiacDisplay(cardiacData) {
 
 
 // ==================== BODY COMPOSITION ====================
+let bodyCompEditMode = false;
+let bodyCompDeleteMode = false;
+let selectedBodyCompIds = [];
+
 function calculateBodyCompKg() {
     const weight = parseFloat(document.getElementById("body-weight").value) || 0;
     const fatPct = parseFloat(document.getElementById("body-fat-pct").value) || 0;
@@ -1705,6 +1716,19 @@ async function saveBodyCompEntry() {
 async function loadBodyCompPage() {
     const entries = await db.bodyComp.orderBy("date").reverse().toArray();
     
+    // Reset modes
+    bodyCompEditMode = false;
+    bodyCompDeleteMode = false;
+    selectedBodyCompIds = [];
+    document.getElementById("edit-history-btn").classList.remove("active");
+    document.getElementById("delete-history-btn").classList.remove("active");
+    
+    // Load saved height
+    const heightSetting = await db.settings.get("bodyHeight");
+    if (heightSetting) {
+        document.getElementById("body-height").value = heightSetting.value;
+    }
+    
     // Update last stats
     if (entries.length > 0) {
         const last = entries[0];
@@ -1712,6 +1736,11 @@ async function loadBodyCompPage() {
         document.getElementById("last-fat").textContent = last.fatKg.toFixed(2);
         document.getElementById("last-muscle").textContent = last.muscleKg.toFixed(2);
         document.getElementById("last-body-date").textContent = formatDate(last.date);
+        
+        // Auto-calculate BMI if height is set
+        if (heightSetting) {
+            calculateBMI();
+        }
     } else {
         document.getElementById("last-weight").textContent = "--";
         document.getElementById("last-fat").textContent = "--";
@@ -1720,37 +1749,178 @@ async function loadBodyCompPage() {
     }
     
     // Update history list
+    renderBodyCompHistory(entries);
+}
+
+function renderBodyCompHistory(entries) {
     const historyList = document.getElementById("body-history-list");
     
     if (entries.length === 0) {
-        historyList.innerHTML = "<div class=\"body-history-empty\">Nessuna misurazione registrata</div>";
+        historyList.innerHTML = '<div class="body-history-empty">Nessuna misurazione registrata</div>';
         return;
     }
     
     historyList.innerHTML = entries.map(entry => `
-        <div class="body-history-item" data-id="${entry.id}">
+        <div class="body-history-item" data-id="${entry.id}" onclick="handleHistoryItemClick(${entry.id})">
             <span class="history-date">${formatDate(entry.date)}</span>
             <div class="history-values">
                 <span class="weight">${entry.weight.toFixed(1)}</span>
                 <span class="fat">${entry.fatKg.toFixed(2)}</span>
                 <span class="muscle">${entry.muscleKg.toFixed(2)}</span>
             </div>
-            <button class="history-delete-btn" onclick="deleteBodyCompEntry(${entry.id})">🗑️</button>
         </div>
     `).join("");
 }
 
-async function deleteBodyCompEntry(id) {
-    const confirmed = await showConfirm("Eliminare questa misurazione?");
-    if (confirmed) {
-        await db.bodyComp.delete(id);
-        showToast("Misurazione eliminata");
-        loadBodyCompPage();
+function toggleEditMode() {
+    bodyCompEditMode = !bodyCompEditMode;
+    bodyCompDeleteMode = false;
+    selectedBodyCompIds = [];
+    
+    document.getElementById("edit-history-btn").classList.toggle("active", bodyCompEditMode);
+    document.getElementById("delete-history-btn").classList.remove("active");
+    
+    // Reset visual states
+    document.querySelectorAll(".body-history-item").forEach(item => {
+        item.classList.remove("selected", "delete-selected");
+    });
+    
+    if (bodyCompEditMode) {
+        showToast("Seleziona una voce da modificare");
     }
+}
+
+function toggleDeleteMode() {
+    bodyCompDeleteMode = !bodyCompDeleteMode;
+    bodyCompEditMode = false;
+    selectedBodyCompIds = [];
+    
+    document.getElementById("delete-history-btn").classList.toggle("active", bodyCompDeleteMode);
+    document.getElementById("edit-history-btn").classList.remove("active");
+    
+    // Reset visual states
+    document.querySelectorAll(".body-history-item").forEach(item => {
+        item.classList.remove("selected", "delete-selected");
+    });
+    
+    if (bodyCompDeleteMode) {
+        showToast("Seleziona le voci da eliminare, poi premi 🗑️");
+    } else if (selectedBodyCompIds.length > 0) {
+        deleteSelectedBodyCompEntries();
+    }
+}
+
+async function handleHistoryItemClick(id) {
+    const item = document.querySelector(`.body-history-item[data-id="${id}"]`);
+    
+    if (bodyCompEditMode) {
+        // Edit mode - open edit
+        const entry = await db.bodyComp.get(id);
+        if (entry) {
+            document.getElementById("body-weight").value = entry.weight;
+            document.getElementById("body-fat-pct").value = entry.fatPct;
+            document.getElementById("body-muscle-pct").value = entry.musclePct;
+            calculateBodyCompKg();
+            
+            // Delete old and let user save as new
+            await db.bodyComp.delete(id);
+            showToast("Modifica i valori e salva");
+            bodyCompEditMode = false;
+            document.getElementById("edit-history-btn").classList.remove("active");
+            loadBodyCompPage();
+        }
+    } else if (bodyCompDeleteMode) {
+        // Toggle selection
+        const idx = selectedBodyCompIds.indexOf(id);
+        if (idx > -1) {
+            selectedBodyCompIds.splice(idx, 1);
+            item.classList.remove("delete-selected");
+        } else {
+            selectedBodyCompIds.push(id);
+            item.classList.add("delete-selected");
+        }
+    }
+}
+
+async function deleteSelectedBodyCompEntries() {
+    if (selectedBodyCompIds.length === 0) return;
+    
+    const confirmed = await showConfirm(`Eliminare ${selectedBodyCompIds.length} misurazione/i?`);
+    if (confirmed) {
+        for (const id of selectedBodyCompIds) {
+            await db.bodyComp.delete(id);
+        }
+        showToast(`${selectedBodyCompIds.length} misurazione/i eliminate`);
+        loadBodyCompPage();
+    } else {
+        selectedBodyCompIds = [];
+        document.querySelectorAll(".body-history-item").forEach(item => {
+            item.classList.remove("delete-selected");
+        });
+    }
+}
+
+async function calculateBMI() {
+    const height = parseFloat(document.getElementById("body-height").value);
+    const entries = await db.bodyComp.orderBy("date").reverse().toArray();
+    
+    if (!height || height < 100 || height > 250) {
+        showToast("Inserisci un'altezza valida (100-250 cm)");
+        return;
+    }
+    
+    // Save height
+    await db.settings.put({ key: "bodyHeight", value: height });
+    
+    if (entries.length === 0) {
+        showToast("Nessun peso registrato");
+        return;
+    }
+    
+    const weight = entries[0].weight;
+    const heightM = height / 100;
+    const bmi = weight / (heightM * heightM);
+    
+    // Calcola range normopeso
+    const minNormal = (18.5 * heightM * heightM).toFixed(1);
+    const maxNormal = (24.9 * heightM * heightM).toFixed(1);
+    const rangeText = `Range normopeso: ${minNormal} - ${maxNormal} kg`;
+    
+    let category, categoryClass, message;
+    
+    if (bmi < 18.5) {
+        category = "Sottopeso";
+        categoryClass = "underweight";
+        const targetWeight = 18.5 * heightM * heightM;
+        const diff = (targetWeight - weight).toFixed(1);
+        message = `Ti mancano +${diff} kg per il normopeso\n${rangeText}`;
+    } else if (bmi < 25) {
+        category = "Normopeso";
+        categoryClass = "normal";
+        const margin = (weight - parseFloat(minNormal)).toFixed(1);
+        message = `Sei nel peso ideale! 💪\n${rangeText}\nMargine: ${margin} kg dal minimo`;
+    } else if (bmi < 30) {
+        category = "Sovrappeso";
+        categoryClass = "overweight";
+        const diff = (weight - parseFloat(maxNormal)).toFixed(1);
+        message = `Devi perdere ${diff} kg per il normopeso\n${rangeText}`;
+    } else {
+        category = "Obeso";
+        categoryClass = "obese";
+        const diff = (weight - parseFloat(maxNormal)).toFixed(1);
+        message = `Devi perdere ${diff} kg per il normopeso\n${rangeText}`;
+    }
+    
+    const resultEl = document.getElementById("bmi-result");
+    resultEl.innerHTML = `
+        <div class="bmi-value ${categoryClass}">${bmi.toFixed(1)}</div>
+        <div class="bmi-category ${categoryClass}">${category}</div>
+        <div class="bmi-message">${message.replace(/\n/g, '<br>')}</div>
+    `;
+    resultEl.classList.add("visible");
 }
 
 function formatDate(isoString) {
     const date = new Date(isoString);
     return date.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
-
